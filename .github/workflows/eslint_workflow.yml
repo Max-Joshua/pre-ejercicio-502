@@ -73,5 +73,6 @@ jobs:
           npm install -D vitest
 
       - name: Run vitest
+        working-directory: ${{ github.workspace }}/A01365801
         run: npm run vitest
         continue-on-error: true
