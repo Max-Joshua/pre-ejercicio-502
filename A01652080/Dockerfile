@@ -1,12 +1,11 @@
-FROM python:3.7-stretch
-
-RUN apt-get update && apt-get -y install libsnappy-dev && apt-get -y install python3-dev
-RUN mkdir /app
-COPY  execute.sh /app/execute.sh
-COPY requirements.txt /app/requirements.txt
-RUN chmod 777 /app/execute.sh
-RUN pip install -r /app/requirements.txt
-COPY src/ /app/src/
-
-WORKDIR /app/
-ENTRYPOINT ["./execute.sh"]
+# lambda base image for Docker from AWS
+FROM public.ecr.aws/lambda/python:latest
+# copy all code and lambda handler
+COPY src ./src
+COPY lambda_handler.py ./
+COPY requirements.txt ./
+# install packages
+RUN yum install -y gcc-c++ pkgconfig poppler-cpp-devel
+RUN python3 -m pip install -r requirements.txt
+# run lambda handler
+CMD ["lambda_handler.handler"]
