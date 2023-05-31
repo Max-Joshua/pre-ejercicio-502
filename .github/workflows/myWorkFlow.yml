@@ -18,8 +18,14 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Install zip
+        run: sudo apt-get install zip
+
       - name: Run ESLint
         run: npx eslint 'A01028570/src/**/**/*.js'
 
       - name: Run tests
         run: npm test
+
+      - name: Zip files
+        run: npm run zip

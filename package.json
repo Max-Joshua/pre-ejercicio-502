@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "zip": "zip A01028570/zipped/HelloWorld.zip A01028570/src/HelloWorld/index.js"
   },
   "keywords": [],
   "author": "",
