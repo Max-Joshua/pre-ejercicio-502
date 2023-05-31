@@ -24,11 +24,23 @@ jobs:
       - name: Run ESLint
         run: npx eslint 'A01028570/src/**/**/*.js'
 
+  test:
+    needs: build
+
+    steps:
       - name: Run tests
         run: npm test
 
+  package:
+    needs: test
+
+    steps:
       - name: Zip files
         run: npm run zip
 
+  dockerize:
+    needs: package
+
+    steps:
       - name: Dockerize app
         run: make up
