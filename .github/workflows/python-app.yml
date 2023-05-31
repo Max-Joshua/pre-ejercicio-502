@@ -38,3 +38,10 @@ jobs:
           coverage run -m pytest a01025334/test_lambda_handler.py
           coverage report
           coverage html -d cc_report/
+      - name: Deploy
+        run: |
+          RUN_ENV=dev
+          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/p5b5w4r8
+          docker build -t a01025334_lambda .
+          docker tag a01025334_lambda:latest public.ecr.aws/p5b5w4r8/a01025334_lambda:latest
+          docker push public.ecr.aws/p5b5w4r8/a01025334_lambda:latest
