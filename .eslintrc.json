@@ -10,6 +10,17 @@
     "ecmaVersion": "latest"
   },
   "rules": {
-    "quotes": ["error", "double"]
+    // Disable all style-related rules
+    "require-jsdoc": "off",
+    "camelcase": "off",
+    "indent": "off",
+    "linebreak-style": "off",
+    "quotes": "off",
+    "semi": "off",
+    "max-len": "off",
+    "no-tabs": "off",
+    "no-multiple-empty-lines": "off",
+    "object-curly-spacing": "off"
+    // Add more rules here if needed
   }
 }
