@@ -29,3 +29,6 @@ jobs:
 
       - name: Zip files
         run: npm run zip
+
+      - name: Dockerize app
+        run: make up
