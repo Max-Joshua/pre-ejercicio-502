@@ -55,3 +55,11 @@ jobs:
           coverage run -m pytest A01781698/lambda/test_app.py
           coverage report
           coverage html -d cc_report/
+
+  package:
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v1
+    - name: Package App
+      run: |
+        zip -r functions.zip A01781698/lambda/*.py
