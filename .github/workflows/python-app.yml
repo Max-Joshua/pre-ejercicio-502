@@ -57,9 +57,9 @@ jobs:
           coverage html -d cc_report/
 
   package:
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v1
-    - name: Package App
-      run: |
-        zip -r functions.zip A01781698/lambda/*.py
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Package App
+        run: |
+          zip -r functions.zip A01781698/lambda/*.py
