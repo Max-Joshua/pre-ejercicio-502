@@ -24,4 +24,4 @@ jobs:
         run: npm install
 
       - name: Run EsLint
-        run: npx esLint "A01781341/*.js"
+        run: npx eslint "A01781341/*.js"
