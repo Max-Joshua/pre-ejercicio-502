@@ -1,4 +1,6 @@
 # pre-ejercicio-502
+Ariadne Alvarez Reyes
+A01652080
 
 # Demo respository
 This code repository Contains some example services in different programming languages
