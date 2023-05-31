@@ -3,26 +3,26 @@ name: octaCI
 on:
   push:
     branches:
-      - main
+      - A01781042
 
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.x
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
 
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Install dependencies
-      run: pip install -r requirements.txt
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
-    - name: Lint code
-      run: pylint --rcfile=.pylintrc lambda_function.py
+      - name: Lint code
+        run: pylint --rcfile=.pylintrc lambda_function.py
 
-    - name: Run tests
-      run: pytest
+      - name: Run tests
+        run: pytest
