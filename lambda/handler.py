@@ -1,7 +1,4 @@
-# create lambda function python
-
-def handler(event, context):
-
+def handler():
     return {
         'statusCode': 200,
         'body': 'Hello Diego'
