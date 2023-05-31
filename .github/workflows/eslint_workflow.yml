@@ -58,3 +58,20 @@ jobs:
       - name: Run ESLint
         run: npx eslint
         continue-on-error: true
+
+  unit-testig:
+    name: Run unit testing with vitest
+    runs-on: ubuntu-latest
+    needs: eslint
+    step:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install vitest
+        working-directory: ${{ github.workspace }}/A01365801
+        run: |
+          npm install -D vitest
+
+      - name: Run vitest
+        run: npm run vitest
+        continue-on-error: true
