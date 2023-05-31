@@ -83,7 +83,7 @@ jobs:
         uses: docker/build-push-action@v4
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: lambda-pre-ejercicio
+          ECR_REPOSITORY: d5p6w2t2/lambda-pre-ejercicio
           IMAGE_TAG: latest
         with:
           context: ./A01028445/lambda
@@ -124,7 +124,7 @@ jobs:
       - name: Deploy image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: lambda-pre-ejercicio
+          ECR_REPOSITORY: d5p6w2t2/lambda-pre-ejercicio
           IMAGE_TAG: latest
         run: |
           docker load --input /tmp/$IMAGE_TAG.tar
