@@ -3,7 +3,6 @@ import unittest
 
 class MainTest(unittest.TestCase):
     def test_handler(self):
-        print("Testing handler")
         result = handler()
         self.assertEqual(result, {
         'statusCode': 200,
