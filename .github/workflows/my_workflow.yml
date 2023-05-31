@@ -15,6 +15,9 @@ jobs:
         with:
           node-version: 14
 
+      - name: Install zip
+        run: sudo apt-get install zip
+
       - name: Install Dependencies
         run: npm install
 
@@ -23,3 +26,6 @@ jobs:
 
       - name: Run Tests
         run: npm test
+
+      - name: Zip files
+        run: npm run zip

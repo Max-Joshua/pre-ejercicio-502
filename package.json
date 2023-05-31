@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "zip": "zip A01028638/zipped/index.zip A01028638/src/testFunction/index.js"
   },
   "author": "",
   "license": "ISC",
