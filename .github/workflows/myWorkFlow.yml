@@ -5,7 +5,6 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -24,11 +23,19 @@ jobs:
       - name: Run ESLint
         run: npx eslint 'A01028570/src/**/**/*.js'
 
+  test:
+    runs-on: ubuntu-latest
+    steps:
       - name: Run tests
         run: npm test
 
+  package:
+    runs-on: ubuntu-latest
+    steps:
       - name: Zip files
         run: npm run zip
 
-      - name: Dockerize app
-        run: make up
+  dockerize:
+    - name: Dockerize app
+    steps:
+      run: make up
