@@ -30,10 +30,11 @@ jobs:
         node-version: 16
 
     - name: Install dependencies
+      working-directory: ${{ github.workspace }}/A01365801
       run: npm install
 
     - name: Run Build
-      working-directory: ../../A01365801
+      working-directory: ${{ github.workspace }}/A01365801
       run: npm run build --if-present
 
   eslint:
