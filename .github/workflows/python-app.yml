@@ -48,3 +48,16 @@ jobs:
           coverage run -m pytest A01026037/lambda/test_handler.py
           coverage report
           coverage html -d cc_report/
+
+  package:
+    name: package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Package App
+        run: |
+          zip hello_world.zip A01026037/*.js
+
+  dockerize:
+
+  deploy:
