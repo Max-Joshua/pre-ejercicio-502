@@ -34,7 +34,7 @@ jobs:
       run: npm install
 
     - name: Run Build
-      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working-directory: ${{ github.workspace }}/A01365801
+      working-directory: ${{ github.workspace }}/A01365801
       run: npm run build --if-present
 
   eslint:
