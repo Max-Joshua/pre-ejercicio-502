@@ -1,9 +1,4 @@
-FROM python:3.11
+FROM public.ecr.aws/lambda/nodejs:18
 
-#RUN apt-get update && apt-get -y install libsnappy-dev && apt-get -y install python3-dev
-RUN mkdir /app
-WORKDIR /app
-COPY requirements.txt /app
-RUN pip install -r requirements.txt
-COPY . /app
-CMD ["python", "app.py"]
+# Set the CMD to your handler (could also be done as a parameter override outside of the Dockerfile)
+CMD [ "app.handler" ]
