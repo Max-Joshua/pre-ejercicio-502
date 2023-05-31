@@ -74,5 +74,5 @@ jobs:
 
       - name: Run vitest
         working-directory: ${{ github.workspace }}/A01365801
-        run: npm run vitest
+        run: npm run test
         continue-on-error: true
