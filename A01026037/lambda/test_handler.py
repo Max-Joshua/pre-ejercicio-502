@@ -8,3 +8,6 @@ class MainTest(unittest.TestCase):
         'statusCode': 200,
         'body': 'Hello Diego'
     })
+
+if __name__  == '_main_':
+    unittest.main()
