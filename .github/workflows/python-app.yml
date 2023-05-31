@@ -37,4 +37,3 @@ jobs:
           RUN_ENV=dev
           coverage run -m pytest a01025334/test_main.py
           coverage report
-          coverage html -d cc_report/
