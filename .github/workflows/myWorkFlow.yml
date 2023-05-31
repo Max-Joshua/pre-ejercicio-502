@@ -36,6 +36,7 @@ jobs:
         run: npm run zip
 
   dockerize:
-    - name: Dockerize app
+    runs-on: ubuntu-latest
     steps:
-      run: make up
+      - name: Dockerize app
+        run: make up
