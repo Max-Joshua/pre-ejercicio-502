@@ -25,6 +25,7 @@ jobs:
         run: npx eslint 'A01028570/src/**/**/*.js'
 
   test:
+    runs-on: ubuntu-latest
     needs: build
 
     steps:
@@ -32,6 +33,7 @@ jobs:
         run: npm test
 
   package:
+    runs-on: ubuntu-latest
     needs: test
 
     steps:
@@ -39,6 +41,7 @@ jobs:
         run: npm run zip
 
   dockerize:
+    runs-on: ubuntu-latest
     needs: package
 
     steps:
