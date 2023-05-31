@@ -29,3 +29,5 @@ jobs:
 
       - name: Zip files
         run: npm run zip
+      - name: Create Docker Image
+        run: make up
