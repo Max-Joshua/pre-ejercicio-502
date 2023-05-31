@@ -62,7 +62,7 @@ jobs:
 
   dockerize:
     runs-on: ubuntu-latest
-    needs: build
+    needs: package
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -86,7 +86,7 @@ jobs:
           ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
           IMAGE_TAG: latest
         with:
-          context: ./python3
+          context: ./A01028445/lambda
           tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           outputs: type=docker,dest=/tmp/${{ env.IMAGE_TAG }}.tar
       - name: Save image
