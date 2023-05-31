@@ -25,4 +25,7 @@ jobs:
 
       - name: Run EsLint
         run: npx eslint 'A01025250/*.js'
+      
+      - name: Crear zip
+        run: npm zip
 
