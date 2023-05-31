@@ -34,7 +34,7 @@ jobs:
       run: npm install
 
     - name: Run Build
-      working-directory: ${{ github.workspace }}/A01365801
+      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working-directory: ${{ github.workspace }}/A01365801
       run: npm run build --if-present
 
   eslint:
@@ -50,15 +50,13 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install ESLint
+        working-directory: ${{ github.workspace }}/A01365801
         run: |
+          npm install -g eslint
           npm init @eslint/config -- --config semistandard
 
       - name: Run ESLint
-        run: npx eslint .
-          --config .eslintrc.js
-          --ext .js,.jsx,.ts,.tsx
-          --format @microsoft/eslint-formatter-sarif
-          --output-file eslint-results.sarif
+        run: npx eslint
         continue-on-error: true
 
       - name: Upload analysis results to GitHub
