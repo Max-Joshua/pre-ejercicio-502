@@ -50,8 +50,8 @@ jobs:
           pip install flake8 pytest coverage
           if [ -f python3/requirements.txt ]; then pip install -r python3/requirements.txt; fi
       - name: Test with pytest
-      run: |
-        RUN_ENV=dev
-        coverage run -m pytest A01781698/lambda/test_app.py
-        coverage report
-        coverage html -d cc_report/
+        run: |
+          RUN_ENV=dev
+          coverage run -m pytest A01781698/lambda/test_app.py
+          coverage report
+          coverage html -d cc_report/
