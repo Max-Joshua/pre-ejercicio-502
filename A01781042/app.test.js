@@ -1,19 +1,12 @@
-import { it, expect } from "vitest";
-import { handler } from "./app";
+import { it, expect, request } from "vitest";
 
-it('should return "Hello, World!"', async () => {
-  const event = {};
-  const context = {};
-
-  const result = await handler(event, context);
-
-  expect(result).toEqual("Hello, World!");
+it('should respond with "Hello World" on GET "/"', async () => {
+  const response = await request(server).get("/");
+  expect(response.status).toBe(200);
+  expect(response.text).toBe("Hello World");
 });
-it('should return "Hello, Mars!"', async () => {
-  const event = {};
-  const context = {};
-
-  const result = await handler(event, context);
-
-  expect(result).toEqual("Hello, Mars!");
+it('should respond with "Hello Mars" on GET "/"', async () => {
+  const response = await request(server).get("/");
+  expect(response.status).toBe(200);
+  expect(response.text).toBe("Hello Mars");
 });
