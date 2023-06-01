@@ -1,0 +1,89 @@
+name: Lambda Pipeline
+
+on:
+  push:
+    branches:
+      - A01028653
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2.4.0
+        with:
+          node-version: "14.x"
+      - name: Install dependencies
+        run: npm install --prefix A01028653
+      - name: Lint with ESLint
+        run: npm run lint --prefix A01028653
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2.4.0
+        with:
+          node-version: "14.x"
+      - name: Install dependencies
+        run: npm install --prefix A01028653
+      - name: Run Jest test suite
+        run: npm test --prefix A01028653
+
+  package:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2.4.0
+        with:
+          node-version: "14.x"
+      - name: Change directories
+        run: cd A01028653
+      - name: Install dependencies
+        run: npm install --production --ignore-scripts --prefer-offline
+      - name: Archive production files
+        run: zip -r function.zip .
+
+  dockerize:
+    needs: [package]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Unzip production files
+        id: unzip-files
+        run: |
+          unzip function.zip 
+          mv A01028653/* .
+          rm function.zip 
+          rm -rf A01028653
+      - name: Login to AWS ECR registry
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registry-type: public
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Build Docker image
+        id: build-image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.login-ecr.outputs.registry }}/${{ github.repository }}:${{ github.sha }}
+
+  deploy:
+    needs: [dockerize]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to AWS Lambda
+        id: deploy-lambda
+        uses: appleboy/lambda-action@master
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: us-east-1
+          function_name: pre-ejercicio-a01028653
+          image_uri: ${{ steps.login-ecr.outputs.registry }}/${{ github.repository }}:${{ github.sha }}
