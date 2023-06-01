@@ -3,7 +3,7 @@ name: Lint Code
 on: [push, pull_request]
 
 jobs:
-  build:
+  pipeline:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,35 +21,15 @@ jobs:
       - name: Run ESLint
         run: npx eslint 'A01028570/src/**/**/*.js'
 
-  test:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
       - name: Run tests
         run: npm test
 
-  package:
-    runs-on: ubuntu-latest
-    needs: test
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
       - name: Install zip
         run: sudo apt-get install zip
+
       - name: Zip file
         run: npm run zip
 
-  dockerize:
-    runs-on: ubuntu-latest
-    needs: package
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
       - name: Dockerize app
         run: make up
 # dockerize:
