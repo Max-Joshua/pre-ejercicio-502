@@ -1,2 +1,2 @@
 up:
-	docker build -t hello-world-lambda .
+	docker build -t A01028570 .

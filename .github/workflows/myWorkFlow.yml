@@ -7,6 +7,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registry-type: public
+
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -30,8 +43,27 @@ jobs:
       - name: Zip file
         run: npm run zip
 
-      - name: Dockerize app
-        run: make up
+      # - name: Dockerize app
+      #   run: make up
+
+      - name: Build and tag image
+        uses: docker/build-push-action@v4
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
+          IMAGE_TAG: A01028570
+        with:
+          context: ./A01028570
+          tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+          outputs: type=docker,dest=/tmp/${{ env.IMAGE_TAG }}.tar
+
+      # - name: Save image
+      #   uses: actions/upload-artifact@v3
+      #   env:
+      #     IMAGE_TAG: A01028570
+      #   with:
+      #     name: ${{ env.IMAGE_TAG }}
+      #     path: /tmp/${{ env.IMAGE_TAG }}.tar
 # dockerize:
 #     runs-on: ubuntu-latest
 #     needs: build
