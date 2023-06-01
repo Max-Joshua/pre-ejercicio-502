@@ -1,5 +1,5 @@
-const { it, expect } = require("vitest");
-const { handler } = require("./app");
+import { it, expect } from "vitest";
+import { handler } from "./app";
 
 it('should return "Hello, World!"', async () => {
   const event = {};
