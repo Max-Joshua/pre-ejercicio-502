@@ -82,7 +82,7 @@ jobs:
         uses: docker/build-push-action@v4
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: d5p6w2t2/lambda-pre-ejercicio
+          ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
           IMAGE_TAG: latest
         with:
           context: ./A01028445/lambda
@@ -95,7 +95,7 @@ jobs:
         with:
           name: ${{ env.IMAGE_TAG }}
           path: /tmp/${{ env.IMAGE_TAG }}.tar
-
+  # Crear job para mi propio repio de ECR con las credenciales de AWS del prof
   Deploy:
     runs-on: ubuntu-latest
     needs: Dockerize
@@ -120,3 +120,12 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
         with:
           registry-type: public
+      - name: Deploy image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
+          IMAGE_TAG: latest
+        run: |
+          docker load --input /tmp/$IMAGE_TAG.tar
+          docker image ls -a
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
