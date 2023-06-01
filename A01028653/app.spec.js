@@ -1,4 +1,4 @@
-const { handler } = require('.')
+const { handler } = require('./app')
 
 describe('Lambda works', () => {
   it('should return a message', async () => {

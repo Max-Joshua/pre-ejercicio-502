@@ -46,19 +46,26 @@ jobs:
       - name: Install dependencies
         run: npm install --production --ignore-scripts --prefer-offline
       - name: Archive production files
-        run: zip -r function.zip .
+        run: zip -r ${{ github.sha }}.zip .
+      - name: Save package
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ github.sha }}.zip
+          path: ./${{ github.sha }}.zip
 
   dockerize:
     needs: [package]
     runs-on: ubuntu-latest
     steps:
+    - name: Read artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ github.sha }}.zip
+          path: .
       - name: Unzip production files
         id: unzip-files
         run: |
-          unzip function.zip 
-          mv A01028653/* .
-          rm function.zip 
-          rm -rf A01028653
+          unzip ${{ github.sha }}.zip 
       - name: Login to AWS ECR registry
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
