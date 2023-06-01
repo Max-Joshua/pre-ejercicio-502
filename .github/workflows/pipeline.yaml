@@ -58,14 +58,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Read artifact
-          uses: actions/download-artifact@v3
-          with:
-            name: ${{ github.sha }}.zip
-            path: .
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ github.sha }}.zip
+          path: .
       - name: Unzip production files
         id: unzip-files
         run: |
-          unzip ${{ github.sha }}.zip 
+          unzip ${{ github.sha }}.zip
       - name: Login to AWS ECR registry
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
