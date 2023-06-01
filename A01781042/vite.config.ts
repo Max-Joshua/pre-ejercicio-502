@@ -1,5 +1,3 @@
-import { defineConfig } from "vitest/config";
-
 // vite.config.js
 export default {
   include: ["**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
