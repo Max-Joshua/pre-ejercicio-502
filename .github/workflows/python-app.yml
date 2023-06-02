@@ -83,7 +83,7 @@ jobs:
         run: |
           cd A01026037/lambda
           docker build -t d0z3f1c0/demo-repository-ecr:latest .
-          docker tag d0z3f1c0/demo-repository-ecr:latest A01026037/d0z3f1c0/demo-repository-ecr:latest
+          docker tag d0z3f1c0/demo-repository-ecr:latest a01026037/d0z3f1c0/demo-repository-ecr:latest
 
   # get the built image and push it
   deploy:
@@ -107,4 +107,4 @@ jobs:
 
       - name: Push image to Amazon ECR
         run: |
-          docker push A01026037/d0z3f1c0/demo-repository-ecr:latest
+          docker push a01026037/d0z3f1c0/demo-repository-ecr:latest
