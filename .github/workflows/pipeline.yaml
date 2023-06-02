@@ -66,12 +66,12 @@ jobs:
         id: unzip-files
         run: |
           unzip ${{ github.sha }}.zip
+      - name: Change directories
+        run: cd A01028653
       - name: List
         id: ls
         run: |
           ls
-      - name: Change directories
-        run: cd A01028653
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
