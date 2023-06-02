@@ -57,7 +57,7 @@ jobs:
       - uses: actions/checkout@v1
       - name: Package
         run: |
-          zip -r package.zip A01028445/lambda/*.py
+          zip -r fileb://A01028445/package.zip A01028445/lambda/*.py
 
   Dockerize:
     runs-on: ubuntu-latest
