@@ -1,5 +1,5 @@
-resource "aws_iam_role" "a01028653_role_0834" {
-  name = "a01028653_role_0834"
+resource "aws_iam_role" "a01028653_role_08345" {
+  name = "a01028653_role_08345"
 
   # Terraform's "jsonencode" function converts a
   # Terraform expression result to valid JSON syntax.
@@ -7,7 +7,7 @@ resource "aws_iam_role" "a01028653_role_0834" {
     Version = "2012-10-17"
     Statement = [
       {
-        Action = "sts:AssumeRole"
+        Action = "*"
         Effect = "Allow"
         Sid    = ""
         Principal = {
