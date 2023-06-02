@@ -28,7 +28,7 @@ jobs:
 
       - name: Test
         working-directory: ${{github.workspace}}/A01025250
-        run: npx jest
+        run: npm run test
 
       - name: Crear zip
         run: npm zip
