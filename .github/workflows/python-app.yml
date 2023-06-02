@@ -84,7 +84,6 @@ jobs:
           cd A01026037/lambda
           docker build -t d0z3f1c0/demo-repository-ecr:latest .
           docker tag d0z3f1c0/demo-repository-ecr:latest ${{ steps.login-ecr.outputs.registry }}/d0z3f1c0/demo-repository-ecr:latest
-          docker push ${{ steps.login-ecr.outputs.registry }}/d0z3f1c0/demo-repository-ecr:latest
 
   # push image to ecr
   # deploy:
