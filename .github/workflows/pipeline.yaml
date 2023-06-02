@@ -99,7 +99,7 @@ jobs:
     needs: [dockerize]
     runs-on: ubuntu-latest
     steps:
-    - name: Read artifact
+      - name: Read artifact
         uses: actions/download-artifact@v3
         with:
           name: ${{ github.sha }}.zip
