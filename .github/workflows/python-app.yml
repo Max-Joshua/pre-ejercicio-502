@@ -82,6 +82,7 @@ jobs:
           # Build a docker container and
           # push it to ECR so that it can
           # be deployed to ECS.
+          cd A01026037/lambda
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
   # push image to ecr
   deploy:
