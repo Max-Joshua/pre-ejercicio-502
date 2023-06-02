@@ -31,6 +31,7 @@ jobs:
         run: npm run test
 
       - name: Crear zip
+        working-directory: ${{github.workspace}}/A01025250
         run: npm run zip
 
   dockerize:
