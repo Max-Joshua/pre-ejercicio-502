@@ -8,5 +8,5 @@ resource "aws_lambda_function" "pre-ejercicio-a01028653" {
   image_uri    = var.lambda_image_uri
   package_type = "Image"
 
-  role = aws_iam_role.a01028653_role_08345.arn
+  role = "arn:aws:iam::171483448440:role/ASK_CLI_ROLE"
 }
