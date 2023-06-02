@@ -33,9 +33,6 @@ jobs:
         run: |
           RUN_ENV=dev 
           pytest
-      - name: Zip
-        run: |
-          zip -r A01422874/app.zip . -i A01422874/app
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Docker Buildx
