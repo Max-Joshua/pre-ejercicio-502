@@ -57,16 +57,6 @@ jobs:
           tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           outputs: type=docker,dest=/tmp/${{ env.IMAGE_TAG }}.tar
 
-      # - name: Deploy image
-      #   env:
-      #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      #     ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
-      #     IMAGE_TAG: A01028570
-      #   run: |
-      #   docker load --input /tmp/$IMAGE_TAG.tar
-      #   docker image ls -a
-      #   docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-
       - name: Run lambda
         uses: appleboy/lambda-action@v0.1.9
         with:
