@@ -45,7 +45,7 @@ jobs:
           pip install flake8 pytest coverage
           if [ -f python3/requirements.txt ]; then pip install -r python3/requirements.txt; fi
           RUN_ENV=dev
-          coverage run -m pytest A01028445/lambda/test.py
+          coverage run -m pytest A01028445/lambda/test.py≠
           coverage report
           coverage html -d cc_report/
 
@@ -83,7 +83,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
-          IMAGE_TAG: latest
+          IMAGE_TAG: A01028445
         with:
           context: ./A01028445/lambda
           tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
@@ -91,7 +91,7 @@ jobs:
       - name: Save image
         uses: actions/upload-artifact@v3
         env:
-          IMAGE_TAG: latest
+          IMAGE_TAG: A01028445
         with:
           name: ${{ env.IMAGE_TAG }}
           path: /tmp/${{ env.IMAGE_TAG }}.tar
@@ -105,7 +105,7 @@ jobs:
       - name: Read artifact
         uses: actions/download-artifact@v3
         env:
-          IMAGE_TAG: latest
+          IMAGE_TAG: A01028445
         with:
           name: ${{ env.IMAGE_TAG }}
           path: /tmp
@@ -124,7 +124,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
-          IMAGE_TAG: latest
+          IMAGE_TAG: A01028445
         run: |
           docker load --input /tmp/$IMAGE_TAG.tar
           docker image ls -a
