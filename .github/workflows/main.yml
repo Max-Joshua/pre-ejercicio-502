@@ -31,7 +31,7 @@ jobs:
         run: npm run test
 
       - name: Crear zip
-        run: npm zip
+        run: npm run zip
 
   dockerize:
     runs-on: ubuntu-latest
