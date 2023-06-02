@@ -110,6 +110,22 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
         with:
           registry-type: public
+      - name: Setup Terraform CLI
+        uses: hashicorp/setup-terraform@v2.0.2
+      - name: Run Terraform
+        id: tf-run
+        env:
+          TF_VAR_aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          TF_VAR_aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          TF_VAR_lambda_image_uri: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+          AWS_REGION: us-east-1
+        run: |
+          cd A01028653
+          echo "** Running Terraform Init**"
+          terraform init
+
+          echo "** Running Terraform Apply**"
+          terraform apply -auto-approve
       - name: Deploy to AWS Lambda
         id: deploy-lambda
         uses: appleboy/lambda-action@master
