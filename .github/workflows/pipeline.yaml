@@ -99,15 +99,8 @@ jobs:
     needs: [dockerize]
     runs-on: ubuntu-latest
     steps:
-      - name: Read artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{ github.sha }}.zip
-          path: .
-      - name: Unzip production files
-        id: unzip-files
-        run: |
-          unzip ${{ github.sha }}.zip
+      - name: checkout
+        uses: actions/checkout@v2
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -135,6 +128,13 @@ jobs:
 
           echo "** Running Terraform Apply**"
           terraform apply -auto-approve
+
+          echo "** Commit State **"
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          git add -A
+          git commit -m "update tf state"
+          git push origin A01028653
       - name: Deploy to AWS Lambda
         id: deploy-lambda
         uses: appleboy/lambda-action@master
