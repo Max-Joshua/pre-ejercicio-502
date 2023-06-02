@@ -67,9 +67,8 @@ jobs:
       #   docker image ls -a
       #   docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-
       - name: Run lambda
-       - uses: int128/deploy-lambda-action@v1
+        uses: int128/deploy-lambda-action@v1
         with:
           function-name: HelloWorld
           image-uri: ${{ steps.metadata.outputs.tags }}
