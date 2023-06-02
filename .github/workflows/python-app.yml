@@ -138,5 +138,5 @@ jobs:
         id: create-lambda
         run: |
           aws lambda create-function --function-name A01028445-my-lambda-function \
-          # --zip-file fileb://A01028445/lambda/*.py --handler index.handler --runtime nodejs18.x \
+          --zip-file fileb://A01028445/lambda/package.zip --handler index.handler --runtime nodejs18.x \
           --role arn:aws:iam::${{ secrets.AWS_ACCESS_KEY_ID }}:role/lambda-ex
