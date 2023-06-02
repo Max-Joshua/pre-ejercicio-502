@@ -7,11 +7,11 @@ WORKDIR /var/task
 # Copia el archivo index.zip a /app
 COPY ./A01025250/index.zip .
 
-# Instalar unzip
-RUN  yum update && yum install -y unzip
+# # Instalar unzip
+# RUN  yum update && yum install -y unzip
 
-# Descomprime el archivo index.zip
-RUN unzip index.zip
+# # Descomprime el archivo index.zip
+# RUN unzip index.zip
 
 # Copia los archivos package.json y package-lock.json a /app
 COPY package*.json ./

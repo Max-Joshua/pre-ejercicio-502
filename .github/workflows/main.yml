@@ -30,9 +30,9 @@ jobs:
         working-directory: ${{github.workspace}}/A01025250
         run: npm run test
 
-      - name: Crear zip
-        working-directory: ${{github.workspace}}/A01025250
-        run: npm run zip
+      # - name: Crear zip
+      #   working-directory: ${{github.workspace}}/A01025250
+      #   run: npm run zip
 
   dockerize:
     runs-on: ubuntu-latest
