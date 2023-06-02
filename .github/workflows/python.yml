@@ -35,10 +35,9 @@ jobs:
           coverage run -m pytest test/
           coverage report
           coverage html -d cc_report/
-       - name: Zip
+      - name: Zip
         run: |
           zip -r test.zip test/
-          steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Docker Buildx
@@ -84,24 +83,6 @@ jobs:
           IMAGE_TAG: latest
         with:
           name: ${{ env.IMAGE_TAG }}
-          path: /tmp
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-        with:
-          registry-type: public
-      - name: Deploy image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
-          IMAGE_TAG: latest
-        run: |
-          docker load --input /tmp/$IMAGE_TAG.tar
-          docker image ls -a
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          path: /
+
+Free Research Preview. ChatGPT may produce inaccurate i
