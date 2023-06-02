@@ -5,7 +5,7 @@
   "main": ".eslintrc.js",
   "scripts": {
     "test": "jest",
-    "zip": "zip index.zip index.js"
+    "zip": "zip A01025250/index.zip A01025250/index.js"
   },
   "repository": {
     "type": "git",
