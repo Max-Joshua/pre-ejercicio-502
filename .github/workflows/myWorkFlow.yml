@@ -71,5 +71,5 @@ jobs:
         uses: int128/deploy-lambda-action@v1
         with:
           function-name: HelloWorld
-          image-uri: ${{ steps.metadata.outputs.tags }}
-          alias-name: ${{ steps.metadata.outputs.version }}
+          image-uri: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+          alias-name: Latest
