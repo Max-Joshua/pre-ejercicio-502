@@ -91,7 +91,7 @@ jobs:
           ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
           IMAGE_TAG: ${{ github.sha }}
         with:
-          context: .
+          context: ./A01028653
           push: true
           tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
 
