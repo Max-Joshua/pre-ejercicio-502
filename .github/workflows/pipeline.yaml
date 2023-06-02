@@ -113,9 +113,13 @@ jobs:
       - name: Deploy to AWS Lambda
         id: deploy-lambda
         uses: appleboy/lambda-action@master
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
+          IMAGE_TAG: ${{ github.sha }}
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: us-east-1
           function_name: pre-ejercicio-a01028653
-          image_uri: ${{ steps.login-ecr.outputs.registry }}/${{ github.repository }}:${{ github.sha }}
+          image_uri: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
