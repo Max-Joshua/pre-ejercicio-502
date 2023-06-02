@@ -85,7 +85,7 @@ jobs:
           docker build -t d0z3f1c0/demo-repository-ecr:latest .
           docker tag d0z3f1c0/demo-repository-ecr:latest a01026037/d0z3f1c0/demo-repository-ecr:latest
 
-  # get the built image and push it
+  # get the built image and push it, it says thye image doesn't exist
   deploy:
     name: deploy
     runs-on: ubuntu-latest
@@ -107,4 +107,5 @@ jobs:
 
       - name: Push image to Amazon ECR
         run: |
-          docker push ${{ steps.login-ecr.outputs.registry }}/d0z3f1c0/demo-repository-ecr:latest
+          docker push a01026037/d0z3f1c0/demo-repository-ecr:latest
+          docker push d0z3f1c0/demo-repository-ecr:latest
