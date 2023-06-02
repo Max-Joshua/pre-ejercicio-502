@@ -2,6 +2,19 @@
 const request = require("supertest");
 const app = require("./app");
 
+let server;
+
+beforeAll((done) => {
+  server = app.listen(8080, () => {
+    console.log("Server is running on port 8080");
+    done();
+  });
+});
+
+afterAll((done) => {
+  server.close(done);
+});
+
 describe("Test Node.js app endpoints", () => {
   it('should respond with "Hello World" on GET "/"', async () => {
     const response = await request(app).get("/");
