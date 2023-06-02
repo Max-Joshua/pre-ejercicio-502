@@ -119,7 +119,7 @@ jobs:
         env:
           TF_VAR_aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           TF_VAR_aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          TF_VAR_lambda_image_uri: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+          TF_VAR_lambda_image_uri: ${{ steps.login-ecr.outputs.registry }}/d0z3f1c0/demo-repository-ecr:${{ github.sha }}
           AWS_REGION: us-east-1
         run: |
           cd A01028653
