@@ -7,7 +7,7 @@ RUN unzip app/app.zip .
 
 # Copy function code
 WORKDIR /app
-COPY app.py ./
+COPY app/app.py ./
 
 # Set the CMD to your handler (could also be done as a parameter override outside of the Dockerfile)
 CMD [ "test.handler" ]
