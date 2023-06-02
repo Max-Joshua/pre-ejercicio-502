@@ -27,6 +27,7 @@ jobs:
         run: npx eslint 'A01025250/*.js'
 
       - name: Test
+        working-directory: ${{github.workspace}}/A01025250
         run: npx jest
 
       - name: Crear zip
