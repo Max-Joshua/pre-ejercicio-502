@@ -2,10 +2,6 @@ name: YelaCI
 
 on:
   [push, pull_request]
-  # push:
-  #   branches: ["*"]
-  # pull_request:
-  #   branches: ["*"]
 
 jobs:
   build:
@@ -30,9 +26,8 @@ jobs:
         working-directory: ${{github.workspace}}/A01025250
         run: npm run test
 
-      # - name: Crear zip
-      #   working-directory: ${{github.workspace}}/A01025250
-      #   run: npm run zip
+      - name: Crear zip
+        run: npm run zip
 
   dockerize:
     runs-on: ubuntu-latest
@@ -58,7 +53,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
-          IMAGE_TAG: latest
+          IMAGE_TAG: AndreaYela
         with:
           context: .
           tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
@@ -66,7 +61,7 @@ jobs:
       - name: Save image
         uses: actions/upload-artifact@v3
         env:
-          IMAGE_TAG: latest
+          IMAGE_TAG: AndreaYela
         with:
           name: ${{ env.IMAGE_TAG }}
           path: /tmp/${{ env.IMAGE_TAG }}.tar
@@ -80,7 +75,7 @@ jobs:
       - name: Read artifact
         uses: actions/download-artifact@v3
         env:
-          IMAGE_TAG: latest
+          IMAGE_TAG: AndreaYela
         with:
           name: ${{ env.IMAGE_TAG }}
           path: /tmp
@@ -99,7 +94,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
-          IMAGE_TAG: latest
+          IMAGE_TAG: AndreaYela
         run: |
           docker load --input /tmp/$IMAGE_TAG.tar
           docker image ls -a
