@@ -59,6 +59,11 @@ jobs:
       - name: Package App
         run: |
           zip -r hello_world.zip A01026037/lambda/*.py
+      - name: save zip
+        uses: actions/upload-artifact@v2
+        with:
+          name: hello_world.zip
+          path: hello_world.zip
 
   # build and tag image with buildx
   dockerize:
@@ -69,7 +74,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -86,7 +91,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
-          IMAGE_TAG: a01026037
+          IMAGE_TAG: A01026037
         with:
           context: ./A01026037/lambda
           tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
@@ -94,7 +99,7 @@ jobs:
       - name: Save image
         uses: actions/upload-artifact@v3
         env:
-          IMAGE_TAG: latest
+          IMAGE_TAG: A01026037
         with:
           name: ${{ env.IMAGE_TAG }}
           path: /tmp/${{ env.IMAGE_TAG }}.tar
