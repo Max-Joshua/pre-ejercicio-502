@@ -61,3 +61,14 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
+
+      # Build image and push ro ECR
+      - name: Build image and push ro ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: a01025334_lambda
+          IMAGE_TAG: latest
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG a01025334/
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
