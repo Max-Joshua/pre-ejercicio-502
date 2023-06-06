@@ -70,5 +70,6 @@ jobs:
           ECR_REPOSITORY: a01025334_lambda
         run: |
           echo $ECR_REGISTRY
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          echo $ECR_REPOSITORY
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest a01025334/
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
