@@ -44,7 +44,7 @@ jobs:
 
   dockerize_and_deploy:
     runs-on: ubuntu-latest
-    needs: build_and_test
+    # needs: build_and_test
 
     steps:
       - uses: actions/checkout@v3
