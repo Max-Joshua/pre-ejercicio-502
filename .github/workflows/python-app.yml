@@ -13,35 +13,48 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  Build:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
+
+      # Setup python
       - name: Set up Python 3.10
         uses: actions/setup-python@v3
         with:
           python-version: "3.10"
+
+      # Install dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flake8 pytest coverage
+          pip install flake8
+
+      # Lint with flake8
       - name: Lint with flake8
         run: |
-          # stop the build if there are Python syntax errors or undefined names
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+  Test:
+    steps:
+      - uses: actions/checkout@v3
+
+      # Setup python
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest coverage
+
+      # Test with pytest
       - name: Test with pytest
         run: |
-          RUN_ENV=dev
           coverage run -m pytest a01025334/test_lambda_handler.py
           coverage report
-          coverage html -d cc_report/
-      - name: Deploy
-        run: |
-          RUN_ENV=dev
-          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/p5b5w4r8
-          docker build -t a01025334_lambda .
-          docker tag a01025334_lambda:latest public.ecr.aws/p5b5w4r8/a01025334_lambda:latest
-          docker push public.ecr.aws/p5b5w4r8/a01025334_lambda:latest
