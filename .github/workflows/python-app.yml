@@ -62,13 +62,13 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         with:
-          registry: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
+          registry-type: public
 
       # Build image and push ro ECR
       - name: Build image and push to ECR
         id: build-image
         env:
-          ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: a01025334_lambda
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest a01025334/
