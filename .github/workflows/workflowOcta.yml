@@ -153,13 +153,14 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
   deploy_lambda:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
+    needs: deploy
     steps:
       #Using versioned actions
-      - uses: actions/checkout@v2 
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: "16" 
+          node-version: "16"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1 #--> Setup the Credential for the AWS cli
         with:
@@ -175,5 +176,4 @@ jobs:
       - name: deploy
         run: |
           zip -j lambda.zip ./* #--> Zip the Code As we know lambda function accept the zip file.
-          aws lambda update-function-code --function-name=test --zip-file=fileb://lambda.zip 
-
+          aws lambda update-function-code --function-name=test --zip-file=fileb://lambda.zip
