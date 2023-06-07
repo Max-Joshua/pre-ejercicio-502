@@ -64,9 +64,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: npm install
-
       - name: Install vitest
         working-directory: ${{ github.workspace }}/A01781042
         run: |
