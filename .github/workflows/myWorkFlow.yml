@@ -105,7 +105,7 @@ jobs:
           IMAGE_TAG: A01028570
         with:
           name: ${{ env.IMAGE_TAG }}
-          path: /tmp/${{ env.IMAGE_TAG }}.tar
+          path: /tmp
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -125,9 +125,9 @@ jobs:
           ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
           IMAGE_TAG: A01028570
         run: |
-          docker load --input /tmp/$IMAGE_TAG.tar
+          docker load --input /tmp/${{ env.IMAGE_TAG }}.tar
           docker image ls -a
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
 
     # - name: Run lambda
     #   uses: appleboy/lambda-action@v0.1.9
