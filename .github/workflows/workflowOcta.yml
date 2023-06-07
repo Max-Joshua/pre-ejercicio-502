@@ -64,6 +64,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2.4.0
+
       - name: Install dependencies
         run: npm install
         working-directory: ${{ github.workspace }}/A01781042
@@ -86,6 +89,22 @@ jobs:
   #     - name: Zip Lambda function code
   #       run: zip -r lambda.zip .
   #       working-directory: ${{ github.workspace }}/A01781042
+
+  package:
+    needs: [unit-testing]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2.4.0
+        with:
+          node-version: "14.x"
+      - name: Change directories
+        run: cd A01781042
+      - name: Install dependencies
+        run: npm install --production --ignore-scripts --prefer-offline
+      - name: Archive production files
+        run: zip -r lambda.zip .
 
   dockerize:
     runs-on: ubuntu-latest
