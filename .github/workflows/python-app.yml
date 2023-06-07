@@ -54,7 +54,7 @@ jobs:
     needs: Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v1
       - name: Package
         run: |
           zip -r A01028445/package.zip A01028445/lambda/*.py
@@ -89,7 +89,7 @@ jobs:
           tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
           outputs: type=docker,dest=/tmp/${{ env.IMAGE_TAG }}.tar
       - name: Save image
-        uses: actions/upload-artifact
+        uses: actions/upload-artifact@v3
         env:
           IMAGE_TAG: A01028445
         with:
