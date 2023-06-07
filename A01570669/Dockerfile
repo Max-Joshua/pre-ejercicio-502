@@ -1,24 +1,13 @@
 # syntax=docker/dockerfile:1
 
-# Use a base image
-FROM ubuntu:latest
+# Use an official Python runtime as the base image
+FROM python:3.9-slim
 
-# Install Python 3 and pip
-RUN apt-get update && apt-get install -y \
-    python3 \
-    python3-pip
-
-# Install pylint and pytest
-RUN pip3 install pylint pytest
-
-# Set the working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the application files into the container
-COPY . .
+# Copy the Python script to the container
+COPY main.py /app
 
-# Run pylint on the code
-RUN pylint your_python_file.py
-
-# Run pytest to execute tests
-CMD ["pytest", "main.py"]
+# Set the entrypoint to run the Python script
+CMD ["python", "main.py"]
