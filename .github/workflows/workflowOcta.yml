@@ -74,14 +74,14 @@ jobs:
         run: npm test
         continue-on-error: true
 
-  package:
-    name: package
-    needs: unit-testing
-    runs-on: ubuntu-latest
-    steps:
-      - name: Zip Lambda function code
-        run: zip -r lambda.zip .
-        working-directory: ${{ github.workspace }}/A01781042
+  # package:
+  #   name: package
+  #   needs: unit-testing
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Zip Lambda function code
+  #       run: zip -r lambda.zip .
+  #       working-directory: ${{ github.workspace }}/A01781042
 
   dockerize:
     runs-on: ubuntu-latest
