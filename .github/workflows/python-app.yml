@@ -151,20 +151,20 @@ jobs:
         id: role
         run: |
           ROLE_NAME=lambda_role
-          role-policy=lambda_policy
-          role-trust-policy=lambda_trust_policy
-          role-ARN=$(aws iam get-role --ROLE_NAME $ROLE_NAME --query 'Role.Arn' --output text)
-          if [ -z "$role-ARN" ]; then
+          ROLE_POLICY=lambda_policy
+          ROLE_TRUST_POLICY=lambda_trust_policy
+          ROLE_ARN=$(aws iam get-role --ROLE_NAME $ROLE_NAME --query 'Role.Arn' --output text)
+          if [ -z "$ROLE_ARN" ]; then
             echo "Creating role $ROLE_NAME"
-            aws iam create-role --ROLE_NAME $ROLE_NAME --assume-role-policy-document A01028445/trust-policy.json --query 'Role.Arn' --output text
+            aws iam create-role --ROLE_NAME $ROLE_NAME --assume-ROLE_POLICY-document A01028445/trust-policy.json --query 'Role.Arn' --output text
           else
             echo "Role $ROLE_NAME already exists"
           fi
-          echo "::set-output name=role-ARN::$role-ARN"
+          echo "::set-output name=ROLE_ARN::$ROLE_ARN"
       - name: Create Lambda function
         id: create-lambda
         run: |
-          aws create lambda function --function-name A01028445 --zip-file fileb://A01028445/package.zip --handler lambda.handler --runtime python3.8 --role ${{ steps.role.outputs.role-ARN }} --region ${{ env.AWS_REGION }}
+          aws create lambda function --function-name A01028445 --zip-file fileb://A01028445/package.zip --handler lambda.handler --runtime python3.8 --role ${{ steps.role.outputs.ROLE_ARN }} --region ${{ env.AWS_REGION }}
       - name: Get URL
         id: get-url
         run: |
