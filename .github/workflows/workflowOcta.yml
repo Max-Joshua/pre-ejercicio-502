@@ -74,6 +74,10 @@ jobs:
         run: npm test
         continue-on-error: true
 
+  package:
+    name: Run unit testing with vitest
+    runs-on: ubuntu-latest
+    steps:
       - name: Zip Lambda function code
         run: zip -r lambda.zip .
         working-directory: ${{ github.workspace }}/A01781042
@@ -147,3 +151,29 @@ jobs:
           docker load --input /tmp/$IMAGE_TAG.tar
           docker image ls -a
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+  deploy_lambda:
+    runs-on: ubuntu-latest 
+    steps:
+      #Using versioned actions
+      - uses: actions/checkout@v2 
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16" 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1 #--> Setup the Credential for the AWS cli
+        with:
+          # Created the Secrets Under the Repo only with These Variables
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: npm install
+        env:
+          CI: true
+        run: |
+          npm ci
+      - name: deploy
+        run: |
+          zip -j lambda.zip ./* #--> Zip the Code As we know lambda function accept the zip file.
+          aws lambda update-function-code --function-name=test --zip-file=fileb://lambda.zip 
+
