@@ -83,6 +83,19 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
         with:
           registry-type: private
+      - name: Install AWS Cli
+        id: install-aws-cli
+        uses: unfor19/install-aws-cli-action@v1
+        with:
+          version: 2 # default
+          verbose: false # default
+          arch: amd64 # allowed values: amd64, arm64
+          rootdir: "" # defaults to "PWD"
+          workdir: "" # defaults to "PWD/unfor19-awscli"
+      - name: Create Repo
+        env:
+          ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
+        run: aws ecr describe-repositories --repository-names ${{ env.ECR_REPOSITORY }} || aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY }}
       - name: Build Docker image
         id: build-image
         uses: docker/build-push-action@v2
