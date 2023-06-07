@@ -3,138 +3,138 @@ name: CI/CD Pipeline
 on: [push, pull_request]
 
 jobs:
-  # build:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: 14
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
 
-  #     - name: Install Dependencies
-  #       run: npm install
+      - name: Install Dependencies
+        run: npm install
 
-  #     - name: Run ESLint
-  #       run: npx eslint 'A01028570/src/**/**/*.js'
+      - name: Run ESLint
+        run: npx eslint 'A01028570/src/**/**/*.js'
 
-  # test:
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: 14
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
 
-  #     - name: Install Dependencies
-  #       run: npm install
+      - name: Install Dependencies
+        run: npm install
 
-  #     - name: Run tests
-  #       run: npm test
+      - name: Run tests
+        run: npm test
 
-  # package:
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+  package:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  #     - name: Install zip
-  #       run: sudo apt-get install zip
+      - name: Install zip
+        run: sudo apt-get install zip
 
-  #     - name: Zip file
-  #       run: npm run zip
+      - name: Zip file
+        run: npm run zip
 
-  # dockerize:
-  #   runs-on: ubuntu-latest
-  #   needs: package
-  #   steps:
-  #     - name: Configure AWS credentials
-  #       uses: aws-actions/configure-aws-credentials@v1
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: us-east-1
+  dockerize:
+    runs-on: ubuntu-latest
+    needs: package
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
 
-  #     - name: Login to Amazon ECR
-  #       id: login-ecr
-  #       uses: aws-actions/amazon-ecr-login@v1
-  #       with:
-  #         registry-type: public
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registry-type: public
 
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  #     - name: Set up Docker Buildx
-  #       uses: docker/setup-buildx-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-  #     - name: Build and tag image
-  #       uses: docker/build-push-action@v4
-  #       env:
-  #         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-  #         ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
-  #         IMAGE_TAG: A01028570
-  #       with:
-  #         context: ./
-  #         tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
-  #         outputs: type=docker,dest=/tmp/${{ env.IMAGE_TAG }}.tar
+      - name: Build and tag image
+        uses: docker/build-push-action@v4
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
+          IMAGE_TAG: A01028570
+        with:
+          context: ./
+          tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+          outputs: type=docker,dest=/tmp/${{ env.IMAGE_TAG }}.tar
 
-  #     - name: Save image
-  #       uses: actions/upload-artifact@v3
-  #       env:
-  #         IMAGE_TAG: A01028570
-  #       with:
-  #         name: ${{ env.IMAGE_TAG }}
-  #         path: /tmp/${{ env.IMAGE_TAG }}.tar
+      - name: Save image
+        uses: actions/upload-artifact@v3
+        env:
+          IMAGE_TAG: A01028570
+        with:
+          name: ${{ env.IMAGE_TAG }}
+          path: /tmp/${{ env.IMAGE_TAG }}.tar
 
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   needs: [dockerize, test]
-  #   steps:
-  #     - name: Set up Docker Buildx
-  #       uses: docker/setup-buildx-action@v2
-  #     - name: Read artifact
-  #       uses: actions/download-artifact@v3
-  #       env:
-  #         IMAGE_TAG: A01028570
-  #       with:
-  #         name: ${{ env.IMAGE_TAG }}
-  #         path: /tmp
-  #     - name: Configure AWS credentials
-  #       uses: aws-actions/configure-aws-credentials@v1
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: us-east-1
-  #     - name: Login to Amazon ECR
-  #       id: login-ecr
-  #       uses: aws-actions/amazon-ecr-login@v1
-  #       with:
-  #         registry-type: public
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
-  #     - name: Deploy image
-  #       env:
-  #         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-  #         ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
-  #         IMAGE_TAG: A01028570
-  #       run: |
-  #         docker load --input /tmp/${{ env.IMAGE_TAG }}.tar
-  #         docker image ls -a
-  #         docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [dockerize, test]
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Read artifact
+        uses: actions/download-artifact@v3
+        env:
+          IMAGE_TAG: A01028570
+        with:
+          name: ${{ env.IMAGE_TAG }}
+          path: /tmp
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registry-type: public
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Deploy image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
+          IMAGE_TAG: A01028570
+        run: |
+          docker load --input /tmp/${{ env.IMAGE_TAG }}.tar
+          docker image ls -a
+          docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
 
   run:
     runs-on: ubuntu-latest
-    # needs: deploy
+    needs: deploy
     steps:
       - name: log path
-        run: echo pwd
+        run: echo ${pwd}
       - name: chage directory to root
         run: ${{ github.workspace }}
       - name: Configure AWS credentials
