@@ -19,5 +19,8 @@ COPY ./package.json ./
 # Install any needed packages specified in package.json
 RUN npm install
 
+# Copy function code
+COPY index.js ${LAMBDA_TASK_ROOT}
+
 # Set the CMD to your handler (replace "index.handler" with your handler)
 CMD [ "index.handler" ]
