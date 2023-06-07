@@ -65,8 +65,8 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install dependencies
-
-        run: npm install debug@latest
+        run: npm install
+        working-directory: ${{ github.workspace }}/A01781042
 
       - name: Install vitest
         working-directory: ${{ github.workspace }}/A01781042
@@ -74,7 +74,6 @@ jobs:
           npm install -D vitest
 
       - name: Run vitest
-        working-directory: ${{ github.workspace }}/A01781042
         run: npm run test
         continue-on-error: true
 
@@ -185,5 +184,5 @@ jobs:
           ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
           IMAGE_TAG: A01781042
         run: |
-          aws lambda create-function --function-name=A01781042 --package-type Image \
+          aws lambda create-function --function-name=A01781042 --package-type Image 
           --code ImageUri=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --role=arn:aws:iam::171483448440:role/ASK_CLI_ROLE
