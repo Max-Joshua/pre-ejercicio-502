@@ -135,6 +135,8 @@ jobs:
     steps:
       - name: log path
         run: echo pwd
+      - name: chage directory to root
+        run: ${{ github.workspace }}
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
