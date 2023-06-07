@@ -64,6 +64,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Install dependencies
+        working-directory: ${{ github.workspace }}/A01781042
+        run: npm install
+
       - name: Install vitest
         working-directory: ${{ github.workspace }}/A01781042
         run: |
@@ -169,12 +173,16 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-      - name: npm install
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registry-type: public
+
+      - name: Run AWS CLI
         env:
-          CI: true
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: d0z3f1c0/demo-repository-ecr
+          IMAGE_TAG: A01781042
         run: |
-          npm ci
-      - name: deploy
-        run: |
-          zip -j lambda.zip ./* #--> Zip the Code As we know lambda function accept the zip file.
-          aws lambda update-function-code --function-name=test --zip-file=fileb://lambda.zip
+          aws lambda create-function --function-name=A01781042 --image-uri=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
