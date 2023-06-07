@@ -28,7 +28,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ${{ github.workspace }}/A01781042
-        run: npm install 
+        run: npm install
 
       - name: Run Build
         working-directory: ${{ github.workspace }}/A01781042
@@ -64,6 +64,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Install dependencies
+        run: npm ci
+
       - name: Install vitest
         working-directory: ${{ github.workspace }}/A01781042
         run: |
@@ -71,7 +74,7 @@ jobs:
 
       - name: Run vitest
         working-directory: ${{ github.workspace }}/A01781042
-        run: npm run test
+        run: npm test
         continue-on-error: true
 
       - name: Zip Lambda function code
