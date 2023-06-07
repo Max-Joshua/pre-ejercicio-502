@@ -132,7 +132,7 @@ jobs:
 
   Run:
     runs-on: ubuntu-latest
-    needs: Dockerize
+    needs: Deploy
 
     env:
       ECR_REPOSITORY: test
