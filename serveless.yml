@@ -1,8 +1,0 @@
-service: example-service
-
-provider:
-  name: aws
-
-functions:
-  hello:
-    image: ${env:IMAGE_URI}

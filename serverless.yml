@@ -1,0 +1,16 @@
+service: example-service
+
+provider:
+  name: aws
+  # ecr:
+  #   images:
+  #     helloWorld:
+  #       uri: ${env:IMAGE_URI}
+
+# functions:
+#   hello:
+#     image: ${env:IMAGE_URI}
+
+functions:
+  someFunction:
+    image: ${env:IMAGE_URI}
