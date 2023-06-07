@@ -28,7 +28,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ${{ github.workspace }}/A01781042
-        run: npm install --production
+        run: npm install 
 
       - name: Run Build
         working-directory: ${{ github.workspace }}/A01781042
@@ -87,7 +87,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -128,7 +128,7 @@ jobs:
           name: ${{ env.IMAGE_TAG }}
           path: /tmp
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
