@@ -1,30 +1,15 @@
-//Unit Test
-const request = require("supertest");
-const app = require("./app");
+//Unit Testing
 
-let server;
+const { handler } = require("./app");
 
-beforeAll((done) => {
-  server = app.listen(8080, () => {
-    console.log("Server is running on port 8080");
-    done();
-  });
-});
+describe("Lambda function", () => {
+  it("should return a valid response", async () => {
+    const event = {}; // Add any event data you want to test with
 
-afterAll((done) => {
-  server.close(done);
-});
+    const response = await handler(event);
 
-describe("Test Node.js app endpoints", () => {
-  it('should respond with "Hello World" on GET "/"', async () => {
-    const response = await request(app).get("/");
-    expect(response.status).toBe(200);
-    expect(response.text).toBe("Hello World");
-  });
-
-  it('should respond with "Hello Mars" on GET "/hello-mars"', async () => {
-    const response = await request(app).get("/hello-mars");
-    expect(response.status).toBe(200);
-    expect(response.text).toBe("Hello Mars");
+    expect(response).toBeDefined();
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toBe(JSON.stringify("Hello from Mars Lambda!"));
   });
 });

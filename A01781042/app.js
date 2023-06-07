@@ -1,13 +1,7 @@
-// app.js
-const express = require("express");
-const app = express();
-
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
-
-app.get("/hello-mars", (req, res) => {
-  res.send("Hello Mars");
-});
-
-module.exports = app;
+exports.handler = async (event, context) => {
+  const response = {
+    statusCode: 200,
+    body: JSON.stringify("Hello from Mars Lambda!"),
+  };
+  return response;
+};
